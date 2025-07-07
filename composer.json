@@ -15,7 +15,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "nesbot/carbon": "^2.67",
+        "nesbot/carbon": "^3.8.4",
         "illuminate/contracts": "^10.0|^11.0|^12.0",
         "illuminate/database": "^10.0|^11.0|^12.0",
         "illuminate/encryption": "^10.0|^11.0|^12.0",
@@ -30,7 +30,7 @@
     },
     "require-dev": {
         "mockery/mockery": "^1.6",
-        "phpunit/phpunit": "^11.0.1"
+        "phpunit/phpunit": "^11.5.3"
     },
     "autoload": {
         "psr-4": {
