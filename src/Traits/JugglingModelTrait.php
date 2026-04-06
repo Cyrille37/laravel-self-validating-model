@@ -3,6 +3,7 @@
 namespace Esensi\Model\Traits;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 /**
@@ -261,7 +262,7 @@ trait JugglingModelTrait
     public function buildJuggleMethod($type)
     {
         // Convert type to acceptable pattern
-        $type = lcfirst(studly_case($type));
+        $type = lcfirst(Str::studly($type));
 
         // Map the type to it's normalized type
         switch ($type) {
@@ -295,7 +296,7 @@ trait JugglingModelTrait
         }
 
         // Construct a dynamic method name
-        return 'juggle'.studly_case($normalizedType);
+        return 'juggle'.Str::studly($normalizedType);
     }
 
     /**

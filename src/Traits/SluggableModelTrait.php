@@ -2,6 +2,8 @@
 
 namespace Esensi\Model\Traits;
 
+use Illuminate\Support\Arr;
+
 /**
  * Trait that implements the Sluggable Model Interface.
  *
@@ -51,7 +53,7 @@ trait SluggableModelTrait
      */
     public function getSlugAttribute()
     {
-        return array_get($this->attributes, $this->getSlugKey());
+        return Arr::get($this->attributes, $this->getSlugKey());
     }
 
     /**
@@ -61,6 +63,6 @@ trait SluggableModelTrait
      */
     public function setSlugAttribute($value)
     {
-        array_set($this->attributes, $this->getSlugKey(), $this->makeSlug($value));
+        Arr::set($this->attributes, $this->getSlugKey(), $this->makeSlug($value));
     }
 }
