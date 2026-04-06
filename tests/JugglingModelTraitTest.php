@@ -93,11 +93,10 @@ class JugglingModelTraitTest extends PHPUnit
 
     /**
      * Test that setting invalid juggle types throws exception.
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testSettingInvalidJuggleTypeThrowsException()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->model->setJugglable(['foo' => 'foo']);
     }
 
@@ -126,11 +125,10 @@ class JugglingModelTraitTest extends PHPUnit
 
     /**
      * Test that adding an invalid juggle type throws exception.
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testAddingInvalidJuggleTypeThrowsException()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->model->addJugglable('foo', 'foo');
     }
 
@@ -246,11 +244,10 @@ class JugglingModelTraitTest extends PHPUnit
 
     /**
      * Test that merging invalid juggle types throws exception.
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testMergingInvalidJuggleTypeThrowsException()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->model->mergeJugglable(['foo' => 'foo']);
     }
 
@@ -332,11 +329,10 @@ class JugglingModelTraitTest extends PHPUnit
 
     /**
      * Test that an invalid juggle type return false.
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testCheckJuggleTypeReturnsFalseForInvalidType()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->model->shouldReceive('isJuggleType')
             ->once()
             ->with('foo')
@@ -434,11 +430,10 @@ class JugglingModelTraitTest extends PHPUnit
 
     /**
      * Test that juggling an invalid juggle type throws exception.
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testJugglingInvalidJuggleTypeThrowsException()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->model->juggle('foo', 'foo');
     }
 
