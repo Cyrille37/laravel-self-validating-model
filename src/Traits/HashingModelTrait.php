@@ -154,7 +154,13 @@ trait HashingModelTrait
 
         $info = password_get_info($this->attributes[$attribute]);
 
-        return (bool) ($info['algo'] !== 0);
+        return (
+            (
+                $info['algo']
+                    ??
+                0
+            ) !== 0
+        );
     }
 
     /**
