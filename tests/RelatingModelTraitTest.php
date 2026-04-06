@@ -2,6 +2,7 @@
 
 use Esensi\Model\Model;
 use Illuminate\Database\Connection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use PHPUnit\Framework\TestCase as PHPUnit;
@@ -47,11 +48,11 @@ class RelatingModelTraitTest extends PHPUnit
     /**
      * Test that getRelationship throws an exception when
      * the relationship does not exist.
-     *
-     * @expectedException \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function testGettingRelationshipThatDoesNotExist()
     {
+        $this->expectException(ModelNotFoundException::class);
+
         $this->model->shouldReceive('isRelationship')
             ->once()
             ->with('foo')
