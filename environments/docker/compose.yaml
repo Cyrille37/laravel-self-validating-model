@@ -1,0 +1,10 @@
+services:
+  php:
+    build: "./php"
+    volumes:
+      - bind:
+          create_host_path: false
+        source: "./../../"
+        target: "/var/source"
+        type: "bind"
+    working_dir: "/var/source"

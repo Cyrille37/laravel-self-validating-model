@@ -3,7 +3,7 @@
 use Carbon\Carbon;
 use Esensi\Model\Model;
 use Illuminate\Database\Connection;
-use PHPUnit_Framework_TestCase as PHPUnit;
+use PHPUnit\Framework\TestCase as PHPUnit;
 
 /**
  * Tests for the Purging Model Trait.
@@ -14,7 +14,7 @@ class JugglingModelTraitTest extends PHPUnit
     /**
      * Set Up and Prepare Tests.
      */
-    public function setUp()
+    public function setUp(): void
     {
         // Mock the Model that uses the custom trait
         $this->model = Mockery::mock('ModelJugglingStub');
@@ -27,7 +27,7 @@ class JugglingModelTraitTest extends PHPUnit
     /**
      * Tear Down and Clean Up Tests.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
@@ -93,11 +93,10 @@ class JugglingModelTraitTest extends PHPUnit
 
     /**
      * Test that setting invalid juggle types throws exception.
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testSettingInvalidJuggleTypeThrowsException()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->model->setJugglable(['foo' => 'foo']);
     }
 
@@ -126,11 +125,10 @@ class JugglingModelTraitTest extends PHPUnit
 
     /**
      * Test that adding an invalid juggle type throws exception.
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testAddingInvalidJuggleTypeThrowsException()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->model->addJugglable('foo', 'foo');
     }
 
@@ -246,11 +244,10 @@ class JugglingModelTraitTest extends PHPUnit
 
     /**
      * Test that merging invalid juggle types throws exception.
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testMergingInvalidJuggleTypeThrowsException()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->model->mergeJugglable(['foo' => 'foo']);
     }
 
@@ -332,11 +329,10 @@ class JugglingModelTraitTest extends PHPUnit
 
     /**
      * Test that an invalid juggle type return false.
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testCheckJuggleTypeReturnsFalseForInvalidType()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->model->shouldReceive('isJuggleType')
             ->once()
             ->with('foo')
@@ -419,26 +415,25 @@ class JugglingModelTraitTest extends PHPUnit
         $this->assertCount($count, $attributes);
 
         // Check that the attributes are set and return the correct types
-        $this->assertInternalType('string', $this->model->myString);
+        $this->assertIsString($this->model->myString);
         $this->assertInstanceOf('\Carbon\Carbon', $this->model->myDate);
-        $this->assertInternalType('string', $this->model->myDateTime);
-        $this->assertInternalType('integer', $this->model->myTimestamp);
-        $this->assertInternalType('integer', $this->model->myInt);
-        $this->assertInternalType('integer', $this->model->myInteger);
-        $this->assertInternalType('boolean', $this->model->myBool);
-        $this->assertInternalType('boolean', $this->model->myBoolean);
-        $this->assertInternalType('float', $this->model->myDouble);
-        $this->assertInternalType('float', $this->model->myFloat);
-        $this->assertInternalType('array', $this->model->myArray);
+        $this->assertIsString($this->model->myDateTime);
+        $this->assertIsInt($this->model->myTimestamp);
+        $this->assertIsInt($this->model->myInt);
+        $this->assertIsInt($this->model->myInteger);
+        $this->assertIsBool($this->model->myBool);
+        $this->assertIsBool($this->model->myBoolean);
+        $this->assertIsFloat($this->model->myDouble);
+        $this->assertIsFloat($this->model->myFloat);
+        $this->assertIsArray($this->model->myArray);
     }
 
     /**
      * Test that juggling an invalid juggle type throws exception.
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testJugglingInvalidJuggleTypeThrowsException()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->model->juggle('foo', 'foo');
     }
 
@@ -473,7 +468,7 @@ class JugglingModelTraitTest extends PHPUnit
     public function testJuggleTimestamp()
     {
         $timestamp = $this->model->juggleTimestamp('1970-01-01');
-        $this->assertInternalType('integer', $timestamp);
+        $this->assertIsInt($timestamp);
         $this->assertEquals(18000, $timestamp);
     }
 
@@ -490,14 +485,14 @@ class JugglingModelTraitTest extends PHPUnit
         // Test true values
         foreach ([true, 1, '1'] as $value) {
             $boolean = $this->model->juggleBoolean($value);
-            $this->assertInternalType('boolean', $boolean);
+            $this->assertIsBool($boolean);
             $this->assertTrue($boolean);
         }
 
         // Test false values
         foreach ([false, 0, '0'] as $value) {
             $boolean = $this->model->juggleBoolean($value);
-            $this->assertInternalType('boolean', $boolean);
+            $this->assertIsBool($boolean);
             $this->assertFalse($boolean);
         }
     }
@@ -508,11 +503,11 @@ class JugglingModelTraitTest extends PHPUnit
     public function testJuggleInteger()
     {
         $integer = $this->model->juggleInteger('1');
-        $this->assertInternalType('integer', $integer);
+        $this->assertIsInt($integer);
         $this->assertEquals(1, $integer);
 
         $integer = $this->model->juggleInteger('1 large pizza');
-        $this->assertInternalType('integer', $integer);
+        $this->assertIsInt($integer);
         $this->assertEquals(1, $integer);
     }
 
@@ -522,11 +517,11 @@ class JugglingModelTraitTest extends PHPUnit
     public function testJuggleFloat()
     {
         $float = $this->model->juggleFloat('1.23456789');
-        $this->assertInternalType('float', $float);
+        $this->assertIsFloat($float);
         $this->assertEquals(1.23456789, $float);
 
         $float = $this->model->juggleFloat(1 / 4);
-        $this->assertInternalType('float', $float);
+        $this->assertIsFloat($float);
         $this->assertEquals(0.25, $float);
     }
 
@@ -536,7 +531,7 @@ class JugglingModelTraitTest extends PHPUnit
     public function testJuggleString()
     {
         $string = $this->model->juggleString(1 / 4);
-        $this->assertInternalType('string', $string);
+        $this->assertIsString($string);
         $this->assertEquals('0.25', $string);
     }
 
@@ -546,11 +541,11 @@ class JugglingModelTraitTest extends PHPUnit
     public function testJuggleArray()
     {
         $array = $this->model->juggleArray([]);
-        $this->assertInternalType('array', $array);
+        $this->assertIsArray($array);
         $this->assertEmpty($array);
 
         $array = $this->model->juggleArray('foo');
-        $this->assertInternalType('array', $array);
+        $this->assertIsArray($array);
         $this->assertEquals(['foo'], $array);
     }
 }

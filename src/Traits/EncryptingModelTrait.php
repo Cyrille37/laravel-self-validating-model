@@ -4,6 +4,7 @@ namespace Esensi\Model\Traits;
 
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Encryption\Encrypter;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Crypt;
 
 /**
@@ -223,7 +224,7 @@ trait EncryptingModelTrait
         }
 
         try {
-            $this->decrypt(array_get($this->attributes, $attribute));
+            $this->decrypt(Arr::get($this->attributes, $attribute));
         } catch (DecryptException $exception) {
             return false;
         }
@@ -248,7 +249,7 @@ trait EncryptingModelTrait
     public function encryptAttributes()
     {
         foreach ($this->getEncryptable() as $attribute) {
-            $this->setEncryptingAttribute($attribute, array_get($this->attributes, $attribute));
+            $this->setEncryptingAttribute($attribute, Arr::get($this->attributes, $attribute));
         }
     }
 
@@ -284,7 +285,7 @@ trait EncryptingModelTrait
      */
     public function getEncryptedAttribute($attribute)
     {
-        $value = array_get($this->attributes, $attribute);
+        $value = Arr::get($this->attributes, $attribute);
 
         return $this->isEncrypted($attribute) ? $this->decrypt($value) : $value;
     }
@@ -297,6 +298,6 @@ trait EncryptingModelTrait
      */
     public function setEncryptingAttribute($attribute, $value)
     {
-        array_set($this->attributes, $attribute, $this->encrypt($value));
+        Arr::set($this->attributes, $attribute, $this->encrypt($value));
     }
 }
