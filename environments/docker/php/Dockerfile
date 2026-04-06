@@ -4,6 +4,10 @@ FROM "php:${VERSION}-alpine"
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/conf.d/php.ini"
 
+RUN apk add $PHPIZE_DEPS linux-headers && \
+    pecl install xdebug-3.5.1 && \
+    docker-php-ext-enable xdebug
+
 RUN apk add git
 
 RUN git config --global --add safe.directory /var/source
