@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @see Esensi\Model\Contracts\ValidatingModelInterface
  * @see Illuminate\Contracts\Support\MessageProvider
  *
+ * Model::rules(), which works through Laravel's __callStatic magic method, but PhpStan doesn't know about this pattern.
  * @method static array rules()
  */
 abstract class Model extends Eloquent implements
