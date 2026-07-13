@@ -34,6 +34,8 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @see Esensi\Model\Contracts\RelatingModelInterface
  * @see Esensi\Model\Contracts\ValidatingModelInterface
  * @see Illuminate\Contracts\Support\MessageProvider
+ *
+ * @method static array rules()
  */
 abstract class Model extends Eloquent implements
     //EncryptingModelInterface,
